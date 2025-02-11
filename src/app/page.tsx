@@ -1,101 +1,112 @@
-import Image from "next/image";
+"use client";
+import { useState } from "react";
 
-export default function Home() {
+export default function RegistrationForm() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    participateInSpeedMarketing: false,
+    company: "",
+    productOrService: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === "checkbox" ? checked : value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    alert("Inscrição realizada com sucesso!");
+  };
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="min-h-screen bg-red-50 flex justify-center items-center px-4">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-lg"
+      >
+        <h1 className="text-3xl font-bold text-red-600 mb-8 text-center">
+          Inscreva-se para o Evento
+        </h1>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+        <label className="block mb-4">
+          <span className="text-gray-700">Nome</span>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+            placeholder="Digite seu nome completo"
+            className="mt-2 w-full p-3 border-2 border-red-300 rounded-lg focus:outline-none focus:border-red-500 shadow-sm text-black"
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
+        </label>
+
+        <label className="block mb-4">
+          <span className="text-gray-700">Email</span>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            placeholder="Digite seu email"
+            className="mt-2 w-full p-3 border-2 border-red-300 rounded-lg focus:outline-none focus:border-red-500 shadow-sm text-black"
           />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
+        </label>
+
+        <label className="flex items-center mb-6">
+          <input
+            type="checkbox"
+            name="participateInSpeedMarketing"
+            checked={formData.participateInSpeedMarketing}
+            onChange={handleChange}
+            className="w-5 h-5 text-red-500 focus:ring-red-400 border-gray-300 rounded"
           />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          <span className="ml-3 text-gray-700">
+            Deseja participar do Speed Marketing?
+          </span>
+        </label>
+
+        {formData.participateInSpeedMarketing && (
+          <>
+            <label className="block mb-4">
+              <span className="text-gray-700">Empresa</span>
+              <input
+                type="text"
+                name="company"
+                value={formData.company}
+                onChange={handleChange}
+                placeholder="Nome da empresa"
+                className="mt-2  w-full p-3 border-2 border-red-300 rounded-lg focus:outline-none focus:border-red-500 shadow-sm text-black"
+              />
+            </label>
+
+            <label className="block mb-6">
+              <span className="text-gray-700">Produto, Serviço ou Marca</span>
+              <input
+                type="text"
+                name="productOrService"
+                value={formData.productOrService}
+                onChange={handleChange}
+                placeholder="Digite o que pretende promover"
+                className="mt-2 w-full p-3 border-2 border-red-300 rounded-lg focus:outline-none focus:border-red-500 shadow-sm text-black"
+              />
+            </label>
+          </>
+        )}
+
+        <button
+          type="submit"
+          className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 transition-colors font-semibold shadow-md"
+        >
+          Enviar Inscrição
+        </button>
+      </form>
     </div>
   );
 }
